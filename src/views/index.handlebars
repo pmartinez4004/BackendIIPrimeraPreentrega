@@ -1,0 +1,16 @@
+<main class="d-flex flex-column align-items-center w-100 flex-grow-1">
+  
+  <h1 class="bg-success-subtle p-2 text-center text-success w-100">LIST OF PRODUCTS</h1>
+  <section class="d-flex flex-wrap justify-content-evenly">
+    {{#each products}}
+    <div class="card m-1" style="width: 18rem;">
+            <img src={{this.image}} class="card-img-top" alt={{this._id}} style="height: 12rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{this.title}}</h5>
+                <p class="card-text">USD{{this.price}}</p>
+                <a href="/product/{{this._id}}" class="btn btn-primary">+info</a>
+            </div>
+        </div>
+    {{/each}}
+  </section>
+</main>

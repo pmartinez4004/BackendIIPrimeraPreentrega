@@ -1,0 +1,15 @@
+<main class="d-flex flex-column align-items-center w-100 flex-grow-1">
+  <h1 class="bg-success-subtle p-2 text-center text-success w-100">{{product.title}}</h1>
+  <section class="m-3 w-100 d-flex justify-content-evenly flex-wrap align-items-center">
+    <div class="card" style="width: 380px;">
+      <img src={{product.image}} class="card-img-top" alt={{product.title}}>
+      <div class="card-body py-1 px-2">
+        <p class="card-text py-1">{{product.description}}</p>
+        <h5 class="card-title py-1">USD {{product.price}} - {{product.stock}} u.</h5>
+        <input type="number" name="quantity" id="quantity" value="1">
+        <button id={{product._id}} class="btn btn-success py-1 px-2 addToCart">+cart</button>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="/scripts/product.js"></script>

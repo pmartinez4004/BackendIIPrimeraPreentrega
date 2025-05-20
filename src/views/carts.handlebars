@@ -1,0 +1,24 @@
+{{!--{{#each cart}}
+  <div>
+    <h2>Carrito ID: {{this._id}}</h2>
+    <ul>--}}
+      {{#each this.products}}
+        <li>
+          Producto: {{this.productID.title}} <br>
+          Precio: ${{this.productID.price}} <br>
+          Cantidad: {{this.quantity}}
+        </li>
+      {{/each}}
+    {{!--</ul>
+  </div>
+{{/each}}--}}
+
+<button id="volverHome">Volver a la pagina Principal</button>
+
+<script>
+ const homeButton = document.getElementById('volverHome');
+  homeButton.addEventListener('click', () => {
+    window.location.href = '/'; 
+  });
+
+</script>
