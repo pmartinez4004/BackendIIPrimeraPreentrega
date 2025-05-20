@@ -1,17 +1,29 @@
 {{!--{{#each cart}}
   <div>
     <h2>Carrito ID: {{this._id}}</h2>
-    <ul>--}}
-      {{#each this.products}}
+    <ul>
+      {{#each this.products_id}}
         <li>
-          Producto: {{this.productID.title}} <br>
-          Precio: ${{this.productID.price}} <br>
-          Cantidad: {{this.quantity}}
+          Producto: {{this.product_id.title}} <br>
+          Precio: ${{this.product_id.price}} <br>
+          Cantidad: {{this.product_id.quantity}}
         </li>
       {{/each}}
-    {{!--</ul>
+    </ul>
   </div>
 {{/each}}--}}
+
+<h3>Carrito de Usuario: {{cart.user_id.email}}</h3>
+<div>
+    {{#each cart.products}}
+        <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+            <span><strong>Producto:</strong> {{product_id.title}}</span>
+            <span><strong>Precio:</strong> ${{product_id.price}}</span>
+            <span><strong>Cantidad:</strong> {{quantity}}</span>
+        </div>
+    {{/each}}
+</div>
+
 
 <button id="volverHome">Volver a la pagina Principal</button>
 

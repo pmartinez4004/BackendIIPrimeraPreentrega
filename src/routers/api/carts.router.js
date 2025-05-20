@@ -1,8 +1,6 @@
 import RouterHelper from "../../helpers/router.helper.js";
 import { cartsManager } from "../../data/manager.mongo.js";
 import { productsManager } from "../../data/manager.mongo.js";
-import mongoose from "mongoose";
-
 
 
 const createOne = async (req, res) => {
@@ -30,24 +28,27 @@ const readAll = async (req, res, next) => {
 
 
 const addProductToCart = async (req, res) => {
-  const { cid } = req.params;
-  const { pid } = req.params;
-  const productObjectId = mongoose.Types.ObjectId.createFromHexString(pid);
+  const { cid, pid } = req.params;
   const cart = await cartsManager.readById({ _id: cid });
-  
   const productToAdd = await productsManager.readById({ _id: pid });
-  const productIndex = cart.products.findIndex(item => item.product_id.toString() == productToAdd._id.toString());
-  
+  const productIndex = cart.products.findIndex(
+    item => item.product_id._id.toString() === productToAdd._id.toString()
+  );
+
   if (productIndex !== -1) {
     cart.products[productIndex].quantity += 1;
   } else {
-    cart.products.push({ product_id: productObjectId, quantity: 1 })
+    cart.products.push({
+      product_id: productToAdd, 
+      quantity: 1
+    });
   }
-  
+
   await cartsManager.updateById(cid, { products: cart.products }, { new: true });
 
-res.status(200).send({ status: "success", payload: cart });
+  res.status(200).send({ status: "success", payload: cart });
 };
+
 
 
 
@@ -82,7 +83,7 @@ class CartsRouter extends RouterHelper {
   init = () => {
     this.create("/", ["ADMIN"], createOne);
     this.read("/", ["PUBLIC"], readAll);
-    this.read("/:id", ["PUBLIC", "ADMIN"], readById);
+    this.read("/:id", ["PUBLIC"], readById);
     this.update("/:cid/:pid", ["ADMIN"], addProductToCart);
     this.destroy("/:id", ["ADMIN"], destroyById);
     
