@@ -7,8 +7,6 @@ const setupPolicies = (policies) => async (req, res, next) => {
     const token = req?.signedCookies?.token;
     const data = verifyToken(token);
     const { user_id, role } = data;
-    //console.log("user",data._id);
-    //console.log("token",data);
     if (!data._id) return res.json401();
     const roles = {
       USER: policies.includes("USER"),

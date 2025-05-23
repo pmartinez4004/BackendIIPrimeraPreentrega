@@ -27,9 +27,6 @@ const login = async () => {
       const url1 = "/api/carts/";           // se crea unuevo carrito para cargar selecciones del usuario
       let response1 = await fetch(url1, opts1);
       response = await response1.json();
-      
-      
-      console.log("response: ",(JSON.stringify(response.response._id)));
       localStorage.setItem("active_cart", response.response._id) // se guarda id del carrito
       if (response1.error) {
         alert(response1.error);

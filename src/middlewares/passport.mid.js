@@ -77,11 +77,8 @@ passport.use(
           role: user.role,
           email,
         };
-         //console.log("usertoken: ",data)
         const token = createToken(data);
         user.token = token;
-        //console.log("usertoken1: ",JSON.stringify(user.token))
-        //console.log(user)
         done(null, user);
       } catch (error) {
         done(error);

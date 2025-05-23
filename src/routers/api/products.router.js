@@ -52,7 +52,7 @@ class ProductsRouter extends RouterHelper {
   }
   init = () => {
     this.create("/", ["ADMIN"], createOne);
-    this.read("/", ["PUBLIC"], readAll);
+    this.read("/", ["PUBLIC","USER"], readAll);
     this.read("/:id", ["PUBLIC"], readById);
     this.update("/:id", ["ADMIN"], updateById);
     this.destroy("/:id", ["ADMIN"], destroyById);

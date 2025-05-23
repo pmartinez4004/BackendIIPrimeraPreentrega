@@ -1,36 +1,73 @@
-{{!--{{#each cart}}
+<h1 class="bg-success-subtle p-2 text-center text-success w-100">CART</h1>
+  <h3>Carrito de Usuario: {{cart.user_id.email}}</h3>
+
   <div>
-    <h2>Carrito ID: {{this._id}}</h2>
-    <ul>
-      {{#each this.products_id}}
-        <li>
-          Producto: {{this.product_id.title}} <br>
-          Precio: ${{this.product_id.price}} <br>
-          Cantidad: {{this.product_id.quantity}}
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-{{/each}}--}}
-
-<h3>Carrito de Usuario: {{cart.user_id.email}}</h3>
-<div>
     {{#each cart.products}}
-        <div style="display: flex; gap: 20px; margin-bottom: 10px;">
-            <span><strong>Producto:</strong> {{product_id.title}}</span>
-            <span><strong>Precio:</strong> ${{product_id.price}}</span>
-            <span><strong>Cantidad:</strong> {{quantity}}</span>
-        </div>
+    <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+      <span><strong>Producto:</strong> {{product_id.title}}</span>
+      <span><strong>Precio:</strong> ${{product_id.price}}</span>
+      <span><strong>Cantidad:</strong> {{quantity}}</span>
+      <span><strong>Subtotal:</strong> ${{subtotal}}</span>
+      <button class="delete-item" data-id="{{product_id._id}}">Eliminar</button>
+    </div>
     {{/each}}
-</div>
+  </div>
+
+  <h3><strong>Total de Productos:</strong> {{totalQuantity}}</h3>
+  <h3><strong>Monto Total:</strong> ${{totalAmount}}</h3>
+
+  <div class="button-container">
+    <button id="emptyCart">Vaciar Carrito</button>
+    <button id="volverHome">Volver a la página Principal</button>
+  </div>
 
 
-<button id="volverHome">Volver a la pagina Principal</button>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {   // Botón para eliminar un producto específico
 
-<script>
- const homeButton = document.getElementById('volverHome');
-  homeButton.addEventListener('click', () => {
-    window.location.href = '/'; 
-  });
+      document.querySelectorAll(".delete-item").forEach(button => {
+        button.addEventListener("click", async (event) => {
 
-</script>
+          const productId = event.target.dataset.id;
+          const cartId = localStorage.getItem("active_cart");
+          await fetch(`/api/carts/${cartId}/${productId}`, { method: "DELETE" });
+          location.reload();
+        });
+      });
+
+      // Botón para vaciar el carrito completamente
+      document.getElementById("emptyCart").addEventListener("click", async () => {
+        const cartId = localStorage.getItem("active_cart");
+        await fetch(`/api/carts/${cartId}`, { method: "PUT" });
+        location.reload();
+      });
+
+      // Botón para volver a la página principal
+      document.getElementById("volverHome").addEventListener("click", () => {
+        window.location.href = '/';
+      });
+    });
+  </script>
+
+  <style>
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: darkgreen;
+    }
+  </style>
